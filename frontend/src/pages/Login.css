@@ -1,0 +1,293 @@
+/* ═══════════════════════════════════════════════════════════
+   VirtualEye — Login Page Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Page Container ── */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-6);
+}
+
+/* ── Decorative Background Blobs ── */
+.login-page__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  pointer-events: none;
+}
+.login-page__blob--1 {
+  width: 500px;
+  height: 500px;
+  background: var(--color-primary);
+  top: -120px;
+  left: -120px;
+}
+.login-page__blob--2 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-accent);
+  bottom: -100px;
+  right: -80px;
+}
+
+/* ── Card ── */
+.login-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-10) var(--space-8);
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Brand / Header ── */
+.login-card__brand {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.login-card__logo {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin: 0 auto var(--space-4);
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
+}
+.login-card__logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.login-card__title {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-2);
+}
+.login-card__title--accent {
+  color: var(--color-primary);
+}
+
+.login-card__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Error Banner ── */
+.login-card__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-md);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-bottom: var(--space-5);
+}
+.login-card__error svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Form Layout ── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* ── Input Wrapper ── */
+.form-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px 11px 42px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: var(--color-surface-alt);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+  background: var(--color-surface);
+}
+.form-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Password input with toggle btn on right */
+.form-input--password {
+  padding-right: 44px;
+}
+
+.form-input-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+}
+.form-input-toggle:hover {
+  color: var(--color-primary);
+}
+.form-input-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Submit Button ── */
+.login-form__submit {
+  width: 100%;
+  justify-content: center;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  margin-top: var(--space-2);
+}
+
+/* ── Spinner ── */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Divider ── */
+.login-divider {
+  position: relative;
+  text-align: center;
+  margin: var(--space-6) 0;
+}
+.login-divider::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: var(--color-border);
+}
+.login-divider__text {
+  position: relative;
+  background: var(--color-surface);
+  padding: 0 var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Google Button ── */
+.login-card__google-btn {
+  width: 100%;
+  justify-content: center;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  padding: 11px var(--space-4);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+.login-card__google-btn:hover {
+  background: var(--color-surface-alt);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.login-card__google-btn:active {
+  transform: translateY(0);
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ── Footer note ── */
+.login-card__footer {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .login-card {
+    padding: var(--space-8) var(--space-5);
+  }
+}

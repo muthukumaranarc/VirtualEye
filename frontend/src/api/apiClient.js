@@ -4,12 +4,13 @@
  * Base URL is read from the Vite environment variable
  * VITE_VIRTUALEYE_BACKEND_URL defined in the frontend .env file.
  *
- * Usage:
- *   import apiClient from '../api/apiClient';
- *   const res = await apiClient.get('/health');
+ * - Automatically attaches JWT Bearer token from localStorage
+ * - Redirects to /login on 401 Unauthorized responses
  */
 
 import axios from 'axios';
+
+const TOKEN_KEY = 'virtualeye_token';
 
 const apiClient = axios.create({
   baseURL: `${import.meta.env.VITE_VIRTUALEYE_BACKEND_URL || 'http://localhost:5000'}/api`,
@@ -20,28 +21,51 @@ const apiClient = axios.create({
   },
 });
 
-/* ── Request Interceptor ── */
+/* ── Request Interceptor: Attach JWT ── */
 apiClient.interceptors.request.use(
   (config) => {
-    // Future: attach auth token here
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-/* ── Response Interceptor ── */
+/* ── Response Interceptor: Handle 401 ── */
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Centralised error handling — extend in future modules
     const message =
       error.response?.data?.message || error.message || 'An unexpected error occurred.';
     console.error('[VirtualEye API Error]', message);
+
+    // On 401, clear stored token and redirect to login
+    if (error.response?.status === 401) {
+      localStorage.removeItem(TOKEN_KEY);
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+
     return Promise.reject(error);
   }
 );
 
 export default apiClient;
 
+/* ── Token Helpers ── */
+export const TOKEN_STORAGE_KEY = TOKEN_KEY;
+
 /* ── Health Check Helper ── */
 export const fetchHealthStatus = () => apiClient.get('/health');
+
+/* ── Auth Helpers ── */
+export const loginUser     = (email, password) => apiClient.post('/auth/login', { email, password });
+export const registerUser  = (data)            => apiClient.post('/auth/register', data);
+export const fetchMe       = ()                => apiClient.get('/auth/me');
+
+/* ── User Management Helpers ── */
+export const fetchAllUsers = ()     => apiClient.get('/users');
+export const deleteUser    = (id)   => apiClient.delete(`/users/${id}`);

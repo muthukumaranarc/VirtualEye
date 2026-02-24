@@ -4,6 +4,7 @@ Loads all settings from environment variables prefixed with VIRTUALEYE_
 """
 
 import os
+from datetime import timedelta
 from dotenv import load_dotenv
 
 # Load .env file from the backend directory
@@ -26,8 +27,23 @@ class Config:
         "VIRTUALEYE_FRONTEND_URL", "http://localhost:5173"
     )
 
-    # Flask secret key (not used for auth yet, included for future modules)
+    # Flask secret key
     SECRET_KEY: str = os.getenv("VIRTUALEYE_SECRET_KEY", "change-me-in-production")
 
     # Disable debug mode by default; overridden by run.py for dev
     DEBUG: bool = os.getenv("FLASK_DEBUG", "false").lower() == "true"
+
+    # ── JWT Configuration ──────────────────────────────────────
+    JWT_SECRET_KEY: str = os.getenv("VIRTUALEYE_JWT_SECRET", "change-jwt-secret-in-production")
+    JWT_ACCESS_TOKEN_EXPIRES: timedelta = timedelta(hours=8)
+    JWT_TOKEN_LOCATION: list = ["headers"]
+    JWT_HEADER_NAME: str = "Authorization"
+    JWT_HEADER_TYPE: str = "Bearer"
+
+    # ── Google OAuth2 ──────────────────────────────────────────
+    VIRTUALEYE_GOOGLE_CLIENT_ID: str = os.getenv("VIRTUALEYE_GOOGLE_CLIENT_ID", "")
+    VIRTUALEYE_GOOGLE_CLIENT_SECRET: str = os.getenv("VIRTUALEYE_GOOGLE_CLIENT_SECRET", "")
+    VIRTUALEYE_GOOGLE_REDIRECT_URI: str = os.getenv(
+        "VIRTUALEYE_GOOGLE_REDIRECT_URI",
+        "http://localhost:5000/api/auth/google/callback"
+    )
