@@ -1,59 +1,50 @@
-"""
-VirtualEye Backend - Flask Application Factory
-"""
-
 from flask import Flask, jsonify
-from .config import Config
-from .extensions import mongo, cors, jwt
+from flask_cors import CORS
+from dotenv import load_dotenv
+from .extensions import mongo, jwt
+import os
 
+# Load .env variables before app creation
+load_dotenv()
 
-def create_app(config_class=Config):
-    """
-    Application factory pattern for VirtualEye Flask backend.
-    """
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_class)
+
+    # Enable CORS globally
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+
+    # Load configuration
+    app.config["MONGO_URI"] = os.environ.get("VIRTUALEYE_MONGODB_URI")
+    app.config["SECRET_KEY"] = os.environ.get("VIRTUALEYE_SECRET_KEY")
+    app.config["JWT_SECRET_KEY"] = os.environ.get("VIRTUALEYE_JWT_SECRET", "change-me")
+
+    # Google OAuth Configuration
+    app.config["VIRTUALEYE_GOOGLE_CLIENT_ID"] = os.environ.get("VIRTUALEYE_GOOGLE_CLIENT_ID")
+    app.config["VIRTUALEYE_GOOGLE_CLIENT_SECRET"] = os.environ.get("VIRTUALEYE_GOOGLE_CLIENT_SECRET")
+    app.config["VIRTUALEYE_GOOGLE_REDIRECT_URI"] = os.environ.get("VIRTUALEYE_GOOGLE_REDIRECT_URI")
+
+    # Safety Print
+    print("Google Client ID Loaded:", bool(app.config.get("VIRTUALEYE_GOOGLE_CLIENT_ID")))
 
     # Initialize extensions
-    # Only connect PyMongo when a URI is configured (avoids crash in local dev with empty URI)
     if app.config.get("MONGO_URI"):
         mongo.init_app(app)
-    else:
-        import warnings
-        warnings.warn(
-            "VIRTUALEYE_MONGODB_URI is not set. MongoDB connection is DISABLED. "
-            "Set it in backend/.env to enable database features.",
-            RuntimeWarning,
-        )
-
-    cors.init_app(
-        app,
-        resources={r"/api/*": {"origins": app.config.get("VIRTUALEYE_FRONTEND_URL", "*")}},
-        supports_credentials=True,
-    )
 
     jwt.init_app(app)
 
-    # ── JWT error handlers ──────────────────────────────────────────────────
-    @jwt.unauthorized_loader
-    def unauthorized_response(err):
-        return jsonify({"message": "Missing or invalid Authorization token."}), 401
-
-    @jwt.expired_token_loader
-    def expired_token_response(jwt_header, jwt_payload):
-        return jsonify({"message": "Token has expired. Please log in again."}), 401
-
-    @jwt.invalid_token_loader
-    def invalid_token_response(err):
-        return jsonify({"message": "Invalid token."}), 422
-
     # Register blueprints
-    from .routes.health_routes import health_bp
     from .routes.auth_routes import auth_bp
+    from .routes.camera_routes import camera_bp
+    from .routes.health_routes import health_bp
     from .routes.user_routes import user_bp
 
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    app.register_blueprint(camera_bp, url_prefix="/api/camera")
     app.register_blueprint(health_bp, url_prefix="/api")
-    app.register_blueprint(auth_bp, url_prefix="/api")
-    app.register_blueprint(user_bp, url_prefix="/api")
+    app.register_blueprint(user_bp, url_prefix="/api/users")
+
+    @app.route("/")
+    def index():
+        return jsonify({"message": "VirtualEye Backend Running"}), 200
 
     return app

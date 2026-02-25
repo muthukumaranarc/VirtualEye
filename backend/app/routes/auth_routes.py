@@ -39,7 +39,7 @@ def _build_token_identity(user: dict) -> dict:
 
 
 # ── POST /api/auth/register ─────────────────────────────────────────────────
-@auth_bp.route("/auth/register", methods=["POST"])
+@auth_bp.route("/register", methods=["POST"])
 @jwt_required()
 def register():
     """
@@ -82,7 +82,7 @@ def register():
 
 
 # ── POST /api/auth/login ────────────────────────────────────────────────────
-@auth_bp.route("/auth/login", methods=["POST"])
+@auth_bp.route("/login", methods=["POST"])
 def login():
     """
     Authenticate via email + password. Returns a JWT access token.
@@ -115,7 +115,7 @@ def login():
 
 
 # ── GET /api/auth/me ─────────────────────────────────────────────────────────
-@auth_bp.route("/auth/me", methods=["GET"])
+@auth_bp.route("/me", methods=["GET"])
 @jwt_required()
 def me():
     """Return the currently authenticated user's profile."""
@@ -127,7 +127,7 @@ def me():
 
 
 # ── GET /api/auth/google/login ───────────────────────────────────────────────
-@auth_bp.route("/auth/google/login", methods=["GET"])
+@auth_bp.route("/google/login", methods=["GET"])
 def google_login():
     """Redirect the browser to Google's OAuth 2.0 consent screen."""
     client_id = current_app.config["VIRTUALEYE_GOOGLE_CLIENT_ID"]
@@ -150,7 +150,7 @@ def google_login():
 
 
 # ── GET /api/auth/google/callback ────────────────────────────────────────────
-@auth_bp.route("/auth/google/callback", methods=["GET"])
+@auth_bp.route("/google/callback", methods=["GET"])
 def google_callback():
     """
     Handle Google OAuth callback.

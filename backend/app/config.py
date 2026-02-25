@@ -47,3 +47,11 @@ class Config:
         "VIRTUALEYE_GOOGLE_REDIRECT_URI",
         "http://localhost:5000/api/auth/google/callback"
     )
+
+    # ── Camera Streaming Configuration ──────────────────────────
+    VIRTUALEYE_CAMERA_STREAM_URL: str = os.getenv(
+        "VIRTUALEYE_CAMERA_STREAM_URL", "http://localhost:81"
+    )
+    VIRTUALEYE_CAMERA_SIMULATOR: str = os.getenv(
+        "VIRTUALEYE_CAMERA_SIMULATOR", "true"
+    )

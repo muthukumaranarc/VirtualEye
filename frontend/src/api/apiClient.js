@@ -69,3 +69,7 @@ export const fetchMe       = ()                => apiClient.get('/auth/me');
 /* ── User Management Helpers ── */
 export const fetchAllUsers = ()     => apiClient.get('/users');
 export const deleteUser    = (id)   => apiClient.delete(`/users/${id}`);
+
+/* ── Camera Helpers ── */
+export const fetchCameraStatus    = () => apiClient.get('/camera/status');
+export const fetchCameraStreamUrl = () => apiClient.get('/camera/stream-url');

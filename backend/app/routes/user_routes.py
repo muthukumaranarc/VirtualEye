@@ -14,19 +14,23 @@ user_bp = Blueprint("users", __name__)
 
 
 # ── GET /api/users ───────────────────────────────────────────────────────────
-@user_bp.route("/users", methods=["GET"])
+@user_bp.route("", methods=["GET"])
 @jwt_required()
-def list_users():
+def get_users():
     """
     Return list of all users.
     Both ADMIN and USER can call this endpoint; USER is read-only (enforced on FE).
     """
+    from ..models.user_model import get_all_users, serialize_user
+
     users = get_all_users()
-    return jsonify({"users": users}), 200
+    return jsonify({
+        "users": [serialize_user(user) for user in users]
+    }), 200
 
 
 # ── DELETE /api/users/<userId> ───────────────────────────────────────────────
-@user_bp.route("/users/<user_id>", methods=["DELETE"])
+@user_bp.route("/<user_id>", methods=["DELETE"])
 @jwt_required()
 def delete_user(user_id: str):
     """

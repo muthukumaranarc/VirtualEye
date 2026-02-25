@@ -10,6 +10,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Dashboard    from './pages/Dashboard';
 import Login        from './pages/Login';
 import AdminUsers   from './pages/AdminUsers';
+import Cameras      from './pages/Cameras';
 import './styles/global.css';
 import './App.css';
 
@@ -50,6 +51,7 @@ function AppShell() {
       'dashboard':    '/',
       'login':        '/login',
       'admin-users':  '/admin/users',
+      'cameras':      '/cameras',
     };
     window.history.pushState({}, '', routes[target] || '/');
   };
@@ -108,8 +110,9 @@ function AppShell() {
           {/* Cameras — enabled if permission granted */}
           <button
             id="nav-cameras"
-            className={`navbar__link ${!permissions.cameraAccess ? 'navbar__link--disabled' : ''}`}
+            className={`navbar__link ${page === 'cameras' ? 'navbar__link--active' : ''} ${!permissions.cameraAccess ? 'navbar__link--disabled' : ''}`}
             disabled={!permissions.cameraAccess}
+            onClick={() => navigate('cameras')}
             title={permissions.cameraAccess ? 'Cameras' : 'No camera access'}
           >
             Cameras
@@ -181,6 +184,7 @@ function AppShell() {
       <div className="app__content">
         {page === 'dashboard'   && <Dashboard />}
         {page === 'admin-users' && <AdminUsers onNavigate={navigate} />}
+        {page === 'cameras'     && <Cameras />}
       </div>
 
       {/* ── Footer ── */}
