@@ -18,6 +18,8 @@ def create_app():
     app.config["SECRET_KEY"] = os.environ.get("VIRTUALEYE_SECRET_KEY")
     app.config["JWT_SECRET_KEY"] = os.environ.get("VIRTUALEYE_JWT_SECRET", "change-me")
 
+
+
     # Google OAuth Configuration
     app.config["VIRTUALEYE_GOOGLE_CLIENT_ID"] = os.environ.get("VIRTUALEYE_GOOGLE_CLIENT_ID")
     app.config["VIRTUALEYE_GOOGLE_CLIENT_SECRET"] = os.environ.get("VIRTUALEYE_GOOGLE_CLIENT_SECRET")
@@ -38,12 +40,16 @@ def create_app():
     from .routes.health_routes import health_bp
     from .routes.user_routes import user_bp
     from .routes.detection_routes import detection_bp
+    from .routes.alert_routes import alert_bp
+
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(camera_bp, url_prefix="/api/camera")
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(user_bp, url_prefix="/api/users")
     app.register_blueprint(detection_bp, url_prefix="/api/detection")
+    app.register_blueprint(alert_bp, url_prefix="/api/alerts")
+
 
     @app.route("/")
     def index():
