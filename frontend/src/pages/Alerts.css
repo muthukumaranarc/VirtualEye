@@ -1,0 +1,38 @@
+.alerts-page {
+padding: 20px;
+}
+
+.alerts-list {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.alert-card {
+padding: 16px;
+border-radius: 8px;
+color: white;
+}
+
+.alert-high {
+background: #dc2626;
+}
+
+.alert-medium {
+background: #ea580c;
+}
+
+.alert-low {
+background: #ca8a04;
+}
+
+.alert-header {
+display: flex;
+justify-content: space-between;
+font-weight: bold;
+}
+
+.alert-time {
+font-size: 12px;
+opacity: 0.8;
+}

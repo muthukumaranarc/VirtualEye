@@ -11,6 +11,7 @@ import Dashboard    from './pages/Dashboard';
 import Login        from './pages/Login';
 import AdminUsers   from './pages/AdminUsers';
 import Cameras      from './pages/Cameras';
+import Alerts       from './pages/Alerts';
 import './styles/global.css';
 import './App.css';
 
@@ -52,6 +53,7 @@ function AppShell() {
       'login':        '/login',
       'admin-users':  '/admin/users',
       'cameras':      '/cameras',
+      'alerts':       '/alerts',
     };
     window.history.pushState({}, '', routes[target] || '/');
   };
@@ -121,8 +123,9 @@ function AppShell() {
           {/* Alerts — enabled if permission granted */}
           <button
             id="nav-alerts"
-            className={`navbar__link ${!permissions.alertAccess ? 'navbar__link--disabled' : ''}`}
+            className={`navbar__link ${page === 'alerts' ? 'navbar__link--active' : ''} ${!permissions.alertAccess ? 'navbar__link--disabled' : ''}`}
             disabled={!permissions.alertAccess}
+            onClick={() => navigate('alerts')}
             title={permissions.alertAccess ? 'Alerts' : 'No alert access'}
           >
             Alerts
@@ -185,6 +188,7 @@ function AppShell() {
         {page === 'dashboard'   && <Dashboard />}
         {page === 'admin-users' && <AdminUsers onNavigate={navigate} />}
         {page === 'cameras'     && <Cameras />}
+        {page === 'alerts'      && <Alerts />}
       </div>
 
       {/* ── Footer ── */}
