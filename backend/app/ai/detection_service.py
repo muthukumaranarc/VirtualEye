@@ -16,8 +16,9 @@ def get_frame_from_stream():
         return None
     return frame
 
-def detect_humans():
-    frame = get_frame_from_stream()
+def detect_humans(frame=None):
+    if frame is None:
+        frame = get_frame_from_stream()
     if frame is None:
         return {
             "success": False,

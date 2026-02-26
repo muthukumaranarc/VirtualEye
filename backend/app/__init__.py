@@ -60,6 +60,9 @@ def create_app():
 
     @app.route("/")
     def index():
-        return jsonify({"message": "VirtualEye Backend Running"}), 200
+        from .services.camera_engine_controller import start_camera_engine
+        start_camera_engine(app)
+        return jsonify({"message": "VirtualEye Backend Running with Engine Triggered"}), 200
 
+    # Engine moved to run.py to avoid early startup issues
     return app
