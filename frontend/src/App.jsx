@@ -11,6 +11,7 @@ import Dashboard    from './pages/Dashboard';
 import Login        from './pages/Login';
 import AdminUsers   from './pages/AdminUsers';
 import Cameras      from './pages/Cameras';
+import CameraManagement from './pages/CameraManagement';
 import Alerts       from './pages/Alerts';
 import AlertMonitor  from "./components/AlertMonitor";
 import './styles/global.css';
@@ -54,6 +55,7 @@ function AppShell() {
       'login':        '/login',
       'admin-users':  '/admin/users',
       'cameras':      '/cameras',
+      'camera-mgmt':  '/admin/cameras',
       'alerts':       '/alerts',
     };
     window.history.pushState({}, '', routes[target] || '/');
@@ -142,20 +144,34 @@ function AppShell() {
 
           {/* User Management — ADMIN only */}
           {isAdmin && (
-            <button
-              id="nav-user-mgmt"
-              className={`navbar__link navbar__link--admin ${page === 'admin-users' ? 'navbar__link--active' : ''}`}
-              onClick={() => navigate('admin-users')}
-              title="User Management (Admin)"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}>
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              Users
-            </button>
+            <>
+              <button
+                id="nav-user-mgmt"
+                className={`navbar__link navbar__link--admin ${page === 'admin-users' ? 'navbar__link--active' : ''}`}
+                onClick={() => navigate('admin-users')}
+                title="User Management (Admin)"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}>
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                Users
+              </button>
+              <button
+                id="nav-camera-mgmt"
+                className={`navbar__link navbar__link--admin ${page === 'camera-mgmt' ? 'navbar__link--active' : ''}`}
+                onClick={() => navigate('camera-mgmt')}
+                title="Camera Registry (Admin)"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}>
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                Cameras+
+              </button>
+            </>
           )}
         </nav>
 
@@ -189,6 +205,7 @@ function AppShell() {
         {page === 'dashboard'   && <Dashboard />}
         {page === 'admin-users' && <AdminUsers onNavigate={navigate} />}
         {page === 'cameras'     && <Cameras />}
+        {page === 'camera-mgmt' && <CameraManagement />}
         {page === 'alerts'      && <Alerts />}
       </div>
 

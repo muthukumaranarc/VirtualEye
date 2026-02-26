@@ -52,7 +52,7 @@ def create_app():
     from .routes.alert_routes import alert_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
-    app.register_blueprint(camera_bp, url_prefix="/api/camera")
+    app.register_blueprint(camera_bp, url_prefix="/api")
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(user_bp, url_prefix="/api/users")
     app.register_blueprint(detection_bp, url_prefix="/api/detection")
