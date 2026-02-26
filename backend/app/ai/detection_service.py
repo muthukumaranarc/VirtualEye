@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 from datetime import datetime
 from .model_loader import get_model
-from ..services.alert_service import process_detection
 
 
 CAMERA_STREAM_URL = "http://localhost:81/stream"
@@ -38,12 +37,6 @@ def detect_humans():
                 human_detected = True
                 confidence = float(box.conf[0])
                 break # Found one person, that's enough for human_detected
-
-    process_detection({
-        "success": True,
-        "humanDetected": human_detected,
-        "confidence": confidence
-    })
 
     return {
         "success": True,

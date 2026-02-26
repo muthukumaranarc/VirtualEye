@@ -11,19 +11,34 @@ export default function AlertMonitor() {
         if (!alertsEnabled) return;
 
         try {
-            const response = await apiClient.get("/alerts");
-            const alerts = response.data.alerts;
+            const token = localStorage.getItem("virtualeye_token");
+            const response = await apiClient.get("/alerts/recent", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-            if (alerts.length === 0) return;
+            if (response.data.success) {
+                const alerts = response.data.alerts;
 
-            const newestAlert = alerts[0];
+                if (!alerts || alerts.length === 0) return;
 
-            if (newestAlert._id !== lastAlertId) {
-                setLastAlertId(newestAlert._id);
-                setShowAlert(true);
+                // Filter for alerts that are NOT acknowledged and NOT dismissed
+                const activeAlerts = alerts.filter(
+                    alert => !alert.acknowledged && !alert.dismissed
+                );
 
-                const audio = new Audio("/alert.mp3");
-                audio.play();
+                if (activeAlerts.length === 0) return;
+
+                const newestAlert = activeAlerts[0];
+
+                if (newestAlert._id !== lastAlertId) {
+                    setLastAlertId(newestAlert._id);
+                    setShowAlert(true);
+
+                    const audio = new Audio("/alert.mp3");
+                    audio.play().catch(err => console.error("Audio playback error:", err));
+                }
             }
         } catch (err) {
             console.error("Alert polling failed", err);

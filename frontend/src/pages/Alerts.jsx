@@ -8,10 +8,18 @@ const [loading, setLoading] = useState(true);
 
 const fetchAlerts = async () => {
     try {
-        const response = await apiClient.get("/alerts");
-        setAlerts(response.data.alerts);
-    } catch (err) {
-        console.error("Failed to fetch alerts", err);
+        const token = localStorage.getItem("virtualeye_token");
+        const response = await apiClient.get("/alerts/recent", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        
+        if (response.data.success) {
+            setAlerts(response.data.alerts);
+        }
+    } catch (error) {
+        console.error("Failed to fetch alerts:", error);
     } finally {
         setLoading(false);
     }
