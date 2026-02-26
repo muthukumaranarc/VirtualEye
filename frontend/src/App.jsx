@@ -12,6 +12,7 @@ import Login        from './pages/Login';
 import AdminUsers   from './pages/AdminUsers';
 import Cameras      from './pages/Cameras';
 import Alerts       from './pages/Alerts';
+import AlertMonitor  from "./components/AlertMonitor";
 import './styles/global.css';
 import './App.css';
 
@@ -190,6 +191,8 @@ function AppShell() {
         {page === 'cameras'     && <Cameras />}
         {page === 'alerts'      && <Alerts />}
       </div>
+
+      <AlertMonitor />
 
       {/* ── Footer ── */}
       <footer className="footer" id="main-footer">
