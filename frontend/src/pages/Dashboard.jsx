@@ -114,7 +114,7 @@ export default function Dashboard() {
                     </button>
                 </article>
 
-                {/* Total Cameras (placeholder) */}
+                {/* Total Cameras */}
                 <article className="stat-card" id="cameras-card">
                     <div className="stat-card__header">
                         <div className="stat-card__icon-wrap stat-card__icon-wrap--accent">
@@ -123,10 +123,10 @@ export default function Dashboard() {
                                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
                             </svg>
                         </div>
-                        <span className="stat-card__label">Total Cameras</span>
+                        <span className="stat-card__label">Active Cameras</span>
                     </div>
-                    <div className="stat-card__value stat-card__value--large">—</div>
-                    <p className="stat-card__detail">Camera feeds not yet configured</p>
+                    <div className="stat-card__value stat-card__value--large">1</div>
+                    <p className="stat-card__detail">Primary ESP32 Surveillance Active</p>
                 </article>
 
                 {/* Alerts (placeholder) */}

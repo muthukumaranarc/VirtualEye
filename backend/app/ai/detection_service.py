@@ -2,12 +2,12 @@ import cv2
 import numpy as np
 from datetime import datetime
 from .model_loader import get_model
+from config.camera_config import PRIMARY_CAMERA
 
-
-CAMERA_STREAM_URL = "http://localhost:81/stream"
+CAMERA_STREAM_URL = PRIMARY_CAMERA["url"]
 
 def get_frame_from_stream():
-    cap = cv2.VideoCapture(CAMERA_STREAM_URL)
+    cap = cv2.VideoCapture(CAMERA_STREAM_URL, cv2.CAP_FFMPEG)
     if not cap.isOpened():
         return None
     ret, frame = cap.read()
