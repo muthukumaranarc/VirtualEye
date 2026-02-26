@@ -11,9 +11,7 @@ import Dashboard    from './pages/Dashboard';
 import Login        from './pages/Login';
 import AdminUsers   from './pages/AdminUsers';
 import Cameras      from './pages/Cameras';
-import CameraManagement from './pages/CameraManagement';
-import Alerts       from './pages/Alerts';
-import AlertMonitor  from "./components/AlertMonitor";
+
 import './styles/global.css';
 import './App.css';
 
@@ -55,7 +53,6 @@ function AppShell() {
       'login':        '/login',
       'admin-users':  '/admin/users',
       'cameras':      '/cameras',
-      'alerts':       '/alerts',
     };
     window.history.pushState({}, '', routes[target] || '/');
   };
@@ -122,25 +119,7 @@ function AppShell() {
             Cameras
           </button>
 
-          <button
-            id="nav-alerts"
-            className={`navbar__link ${page === 'alerts' ? 'navbar__link--active' : ''} ${!permissions.alertAccess ? 'navbar__link--disabled' : ''}`}
-            disabled={!permissions.alertAccess}
-            onClick={() => navigate('alerts')}
-            title={permissions.alertAccess ? 'Alerts' : 'No alert access'}
-          >
-            Alerts
-          </button>
-
-          {/* Analytics — always enabled after login */}
-          <button
-            id="nav-analytics"
-            className="navbar__link"
-          >
-            Analytics
-          </button>
-
-          {/* User Management — ADMIN only */}
+          {/* Analytics removed */}
           {isAdmin && (
             <>
               <button
@@ -191,16 +170,13 @@ function AppShell() {
         {page === 'dashboard'   && <Dashboard />}
         {page === 'admin-users' && <AdminUsers onNavigate={navigate} />}
         {page === 'cameras'     && <Cameras />}
-        {page === 'alerts'      && <Alerts />}
       </div>
-
-      <AlertMonitor />
 
       {/* ── Footer ── */}
       <footer className="footer" id="main-footer">
         <p className="footer__text">
-          &copy; {new Date().getFullYear()} VirtualEye &mdash; AI Surveillance Platform &mdash;
-          Module 2: Authentication &amp; User Management
+          &copy; {new Date().getFullYear()} VirtualEye &mdash; Pure Surveillance Platform &mdash;
+          Module: Authentication &amp; Live Monitoring
         </p>
       </footer>
     </div>

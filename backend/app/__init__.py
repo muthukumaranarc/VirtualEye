@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 from .extensions import mongo, jwt
@@ -7,7 +7,7 @@ import os
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="../../frontend/dist", static_url_path="/")
 
     # ✅ FIX: Prevent trailing slash redirect issues (CRITICAL)
     app.url_map.strict_slashes = False
@@ -39,30 +39,32 @@ def create_app():
     jwt.init_app(app)
 
     # Initialize default alert rules
-    with app.app_context():
-        from .models.alert_rule_model import create_default_rules
-        create_default_rules()
+    # with app.app_context():
+    #     from .models.alert_rule_model import create_default_rules
+    #     create_default_rules()
 
     # Register blueprints
     from .routes.auth_routes import auth_bp
     # from .routes.camera_routes import camera_bp  # Removed for Single ESP32 Camera Architecture
     from .routes.health_routes import health_bp
     from .routes.user_routes import user_bp
-    from .routes.detection_routes import detection_bp
-    from .routes.alert_routes import alert_bp
     # from .routes.camera_stream_routes import stream_bp  # Removed for Single ESP32 Camera Architecture
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     # app.register_blueprint(camera_bp, url_prefix="/api") # Removed for Single ESP32 Camera Architecture
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(user_bp, url_prefix="/api/users")
-    app.register_blueprint(detection_bp, url_prefix="/api/detection")
-    app.register_blueprint(alert_bp, url_prefix="/api/alerts")
     # app.register_blueprint(stream_bp) # Removed for Single ESP32 Camera Architecture
+
+    @app.errorhandler(404)
+    def not_found(e):
+        if request.path.startswith("/api/"):
+            return jsonify({"message": "Endpoint not found"}), 404
+        return app.send_static_file("index.html")
 
     @app.route("/")
     def index():
-        return jsonify({"message": "VirtualEye Backend Running"}), 200
+        return app.send_static_file("index.html")
 
     # Old engine startup removed for Single ESP32 Camera Architecture
 

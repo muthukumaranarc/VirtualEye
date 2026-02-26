@@ -25,12 +25,10 @@ def _db():
 DEFAULT_PERMISSIONS = {
     "ADMIN": {
         "cameraAccess": True,
-        "alertAccess": True,
         "userViewAccess": True,
     },
     "USER": {
         "cameraAccess": True,
-        "alertAccess": True,
         "userViewAccess": False,
     },
 }

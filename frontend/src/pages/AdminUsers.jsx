@@ -11,7 +11,6 @@ import './AdminUsers.css';
 
 const DEFAULT_PERMS = {
   cameraAccess: true,
-  alertAccess: true,
   userViewAccess: false,
 };
 
@@ -28,7 +27,7 @@ export default function AdminUsers({ onNavigate }) {
   const [showModal, setShowModal]   = useState(false);
   const [formData, setFormData]     = useState({
     name: '', email: '', password: '', role: 'USER',
-    cameraAccess: true, alertAccess: true, userViewAccess: false,
+    cameraAccess: true, userViewAccess: false,
   });
   const [formError, setFormError]   = useState('');
   const [creating, setCreating]     = useState(false);
@@ -85,7 +84,6 @@ export default function AdminUsers({ onNavigate }) {
         role: formData.role,
         permissions: {
           cameraAccess: formData.cameraAccess,
-          alertAccess: formData.alertAccess,
           userViewAccess: formData.userViewAccess,
         },
       };
@@ -243,7 +241,6 @@ export default function AdminUsers({ onNavigate }) {
                   <td>
                     <div className="permissions-list">
                       <PermDot label="Camera" on={u.permissions?.cameraAccess} />
-                      <PermDot label="Alerts" on={u.permissions?.alertAccess} />
                       <PermDot label="Users"  on={u.permissions?.userViewAccess} />
                     </div>
                   </td>
@@ -365,7 +362,6 @@ export default function AdminUsers({ onNavigate }) {
                 <div className="permissions-checkboxes">
                   {[
                     { key: 'cameraAccess', label: 'Camera Access' },
-                    { key: 'alertAccess',  label: 'Alert Access'  },
                     { key: 'userViewAccess', label: 'User View Access' },
                   ].map(({ key, label }) => (
                     <label key={key} className="perm-checkbox">

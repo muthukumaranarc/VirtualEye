@@ -56,7 +56,6 @@ doc = {
     "role":         "ADMIN",
     "permissions": {
         "cameraAccess":   True,
-        "alertAccess":    True,
         "userViewAccess": True,
     },
     "authProvider": "LOCAL",

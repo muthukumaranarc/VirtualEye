@@ -12,7 +12,8 @@ import { useAuth } from '../context/AuthContext';
 import { loginUser } from '../api/apiClient';
 import './Login.css';
 
-const BACKEND_URL = import.meta.env.VITE_VIRTUALEYE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_VIRTUALEYE_BACKEND_URL || (window.location.port === '5173' ? 'http://localhost:5000' : window.location.origin);
+
 
 export default function Login({ onNavigate }) {
   const { login, isAuthenticated } = useAuth();
@@ -212,7 +213,7 @@ export default function Login({ onNavigate }) {
 
         {/* Footer note */}
         <p className="login-card__footer">
-          VirtualEye AI Surveillance — Secure Access Portal
+          VirtualEye Surveillance — Secure Access Portal
         </p>
       </div>
     </div>

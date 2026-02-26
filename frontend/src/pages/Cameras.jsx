@@ -6,7 +6,7 @@ export default function Cameras() {
       <header className="cameras-header">
         <div className="header-icon">🛡️</div>
         <h1>Primary Surveillance Feed</h1>
-        <p>Live ESP32-CAM monitoring with real-time human detection engine active.</p>
+        <p>Live ESP32-CAM monitoring feed.</p>
       </header>
 
       <div className="single-camera-container">
@@ -21,23 +21,17 @@ export default function Cameras() {
           
           <div className="camera-stream-container">
             <img
-              src="http://localhost:5000/api/primary-camera/stream"
+              src="http://192.168.45.163/stream"
               alt="ESP32 Surveillance Camera"
               className="live-video"
               width="100%"
             />
-            <div className="stream-overlay">
-              <div className="overlay-top">
-                <span className="location-tag">📍 Main Area</span>
-                <span className="camera-id-tag">ID: PRIMARY_CAM</span>
-              </div>
-            </div>
           </div>
 
           <div className="camera-footer">
             <div className="stat">
-              <span className="label">Engine</span>
-              <span className="value">AI ACTIVE</span>
+              <span className="label">Stream</span>
+              <span className="value">ACTIVE</span>
             </div>
             <div className="stat">
               <span className="label">Type</span>

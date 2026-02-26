@@ -64,7 +64,6 @@ export function AuthProvider({ children }) {
   // Permissions derived from the user object
   const permissions = user?.permissions || {
     cameraAccess: false,
-    alertAccess: false,
     userViewAccess: false,
   };
 

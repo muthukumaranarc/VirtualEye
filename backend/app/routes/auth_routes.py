@@ -201,16 +201,10 @@ def google_callback():
     if not email:
         return redirect(f"{frontend_url}/login?error=google_no_email")
 
-    # Find or create the user
+    # Find the user; reject if not registered
     user = find_user_by_email(email)
     if not user:
-        user_id = create_user(
-            email=email,
-            name=name,
-            role="USER",
-            auth_provider="GOOGLE",
-        )
-        user = find_user_by_id(user_id)
+        return redirect(f"{frontend_url}/login?error=google_unauthorized")
 
     identity = _build_token_identity(user)
     jwt_token = create_access_token(

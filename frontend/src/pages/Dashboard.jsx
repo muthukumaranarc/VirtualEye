@@ -60,13 +60,13 @@ export default function Dashboard() {
             <section className="dashboard__hero animate-fade-in-up">
                 <div className="dashboard__hero-badge">
                     <span className="status-dot online" />
-                    AI Surveillance Platform
+                    Surveillance Platform
                 </div>
                 <h1 className="dashboard__title">
                     <span className="text-gradient">VirtualEye</span> Dashboard
                 </h1>
                 <p className="dashboard__subtitle">
-                    Real-time AI-powered video analytics &amp; surveillance monitoring system.
+                    Real-time surveillance monitoring system.
                     <br />
                     <span className="dashboard__date">{dateString}</span>
                 </p>
@@ -129,21 +129,7 @@ export default function Dashboard() {
                     <p className="stat-card__detail">Primary ESP32 Surveillance Active</p>
                 </article>
 
-                {/* Alerts (placeholder) */}
-                <article className="stat-card" id="alerts-card">
-                    <div className="stat-card__header">
-                        <div className="stat-card__icon-wrap stat-card__icon-wrap--warning">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                                <line x1="12" y1="9" x2="12" y2="13" />
-                                <line x1="12" y1="17" x2="12.01" y2="17" />
-                            </svg>
-                        </div>
-                        <span className="stat-card__label">Active Alerts</span>
-                    </div>
-                    <div className="stat-card__value stat-card__value--large">—</div>
-                    <p className="stat-card__detail">Alert system coming soon</p>
-                </article>
+                {/* Alerts (removed) */}
 
                 {/* Users (placeholder) */}
                 <article className="stat-card" id="users-card">

@@ -12,8 +12,13 @@ import axios from 'axios';
 
 const TOKEN_KEY = 'virtualeye_token';
 
+const getBaseUrl = () => {
+  if (import.meta.env.VITE_VIRTUALEYE_BACKEND_URL) return import.meta.env.VITE_VIRTUALEYE_BACKEND_URL;
+  return window.location.port === '5173' ? 'http://localhost:5000' : window.location.origin;
+};
+
 const apiClient = axios.create({
-  baseURL: `${import.meta.env.VITE_VIRTUALEYE_BACKEND_URL || 'http://localhost:5000'}/api`,
+  baseURL: `${getBaseUrl()}/api`,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
