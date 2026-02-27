@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchHealthStatus } from '../api/apiClient';
+import { fetchHealthStatus, fetchAllUsers } from '../api/apiClient';
 import './Dashboard.css';
 
 const POLL_INTERVAL_MS = 30_000; // re-check every 30 seconds
@@ -14,6 +14,7 @@ export default function Dashboard() {
     const [backendStatus, setBackendStatus] = useState('checking'); // 'checking' | 'online' | 'offline'
     const [lastChecked, setLastChecked] = useState(null);
     const [serviceLabel, setServiceLabel] = useState('—');
+    const [userCount, setUserCount] = useState('—');
 
     const checkHealth = useCallback(async () => {
         setBackendStatus('checking');
@@ -34,11 +35,27 @@ export default function Dashboard() {
         }
     }, []);
 
+    const fetchUsers = useCallback(async () => {
+        try {
+            const res = await fetchAllUsers();
+            if (res.data && Array.isArray(res.data.users)) {
+                setUserCount(res.data.users.length);
+            } else if (res.data && Array.isArray(res.data)) {
+                setUserCount(res.data.length);
+            } else {
+                setUserCount('0');
+            }
+        } catch {
+            setUserCount('Error');
+        }
+    }, []);
+
     useEffect(() => {
         checkHealth();
+        fetchUsers();
         const interval = setInterval(checkHealth, POLL_INTERVAL_MS);
         return () => clearInterval(interval);
-    }, [checkHealth]);
+    }, [checkHealth, fetchUsers]);
 
     const statusLabel = {
         checking: 'Checking…',
@@ -126,7 +143,7 @@ export default function Dashboard() {
                         <span className="stat-card__label">Active Cameras</span>
                     </div>
                     <div className="stat-card__value stat-card__value--large">1</div>
-                    <p className="stat-card__detail">Primary ESP32 Surveillance Active</p>
+                    <p className="stat-card__detail">Primary Laptop Surveillance Active</p>
                 </article>
 
                 {/* Alerts (removed) */}
@@ -144,8 +161,8 @@ export default function Dashboard() {
                         </div>
                         <span className="stat-card__label">System Users</span>
                     </div>
-                    <div className="stat-card__value stat-card__value--large">—</div>
-                    <p className="stat-card__detail">Authentication coming in Module 2</p>
+                    <div className="stat-card__value stat-card__value--large">{userCount}</div>
+                    <p className="stat-card__detail">Total registered users</p>
                 </article>
             </section>
 
@@ -164,11 +181,11 @@ export default function Dashboard() {
                         </svg>
                     </div>
                     <div>
-                        <h3 className="info-banner__title">Module 1 — Foundation Complete</h3>
+                        <h3 className="info-banner__title">System Active and Secure</h3>
                         <p className="info-banner__text">
-                            The VirtualEye base architecture is live. Flask backend, MongoDB Atlas connection,
-                            and React frontend are wired up and operational. Authentication &#40;Module 2&#41;
-                            will add secure login, Google OAuth 2.0, and role-based access control.
+                            The VirtualEye system is fully operational. Active surveillance feeds,
+                            machine learning monitoring, and role-based access control are online and
+                            protecting your perimeter.
                         </p>
                     </div>
                 </div>

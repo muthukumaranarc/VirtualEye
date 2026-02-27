@@ -78,3 +78,10 @@ export const deleteUser    = (id)   => apiClient.delete(`/users/${id}`);
 /* ── Camera Helpers ── */
 export const fetchCameraStatus    = () => apiClient.get('/camera/status');
 export const fetchCameraStreamUrl = () => apiClient.get('/camera/stream-url');
+
+/* ── Alert Helpers ── */
+export const fetchAlertConfig     = () => apiClient.get('/alerts/config');
+export const updateAlertConfig    = (toggles) => apiClient.put('/alerts/config', { toggles });
+export const fetchAlertHistory    = () => apiClient.get('/alerts/history');
+export const fetchRecentAlerts    = () => apiClient.get('/alerts/recent');
+export const triggerTestAlert     = (type, message) => apiClient.post('/alerts/trigger', { type, message });

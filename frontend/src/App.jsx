@@ -1,5 +1,5 @@
 /**
- * VirtualEye — Root App Component  (Module 2: Auth + User Management)
+ * VirtualEye — Root App Component
  *
  * State-based "routing":  page state drives which component is rendered.
  * Google OAuth callback is handled by checking window.location on mount.
@@ -11,6 +11,8 @@ import Dashboard    from './pages/Dashboard';
 import Login        from './pages/Login';
 import AdminUsers   from './pages/AdminUsers';
 import Cameras      from './pages/Cameras';
+import Alerts       from './pages/Alerts';
+import AlertMonitor from './components/AlertMonitor';
 
 import './styles/global.css';
 import './App.css';
@@ -53,6 +55,7 @@ function AppShell() {
       'login':        '/login',
       'admin-users':  '/admin/users',
       'cameras':      '/cameras',
+      'alerts':       '/alerts',
     };
     window.history.pushState({}, '', routes[target] || '/');
   };
@@ -119,6 +122,15 @@ function AppShell() {
             Cameras
           </button>
 
+          {/* Alerts */}
+          <button
+            id="nav-alerts"
+            className={`navbar__link ${page === 'alerts' ? 'navbar__link--active' : ''}`}
+            onClick={() => navigate('alerts')}
+          >
+            Alerts
+          </button>
+
           {/* Analytics removed */}
           {isAdmin && (
             <>
@@ -170,13 +182,16 @@ function AppShell() {
         {page === 'dashboard'   && <Dashboard />}
         {page === 'admin-users' && <AdminUsers onNavigate={navigate} />}
         {page === 'cameras'     && <Cameras />}
+        {page === 'alerts'      && <Alerts />}
       </div>
+
+      {/* ── Global Alert Toast Monitor ── */}
+      <AlertMonitor />
 
       {/* ── Footer ── */}
       <footer className="footer" id="main-footer">
         <p className="footer__text">
-          &copy; {new Date().getFullYear()} VirtualEye &mdash; Pure Surveillance Platform &mdash;
-          Module: Authentication &amp; Live Monitoring
+          &copy; {new Date().getFullYear()} VirtualEye &mdash; Pure Surveillance Platform
         </p>
       </footer>
     </div>

@@ -48,12 +48,14 @@ def create_app():
     # from .routes.camera_routes import camera_bp  # Removed for Single ESP32 Camera Architecture
     from .routes.health_routes import health_bp
     from .routes.user_routes import user_bp
+    from .routes.alert_routes import alert_bp
     # from .routes.camera_stream_routes import stream_bp  # Removed for Single ESP32 Camera Architecture
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     # app.register_blueprint(camera_bp, url_prefix="/api") # Removed for Single ESP32 Camera Architecture
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(user_bp, url_prefix="/api/users")
+    app.register_blueprint(alert_bp, url_prefix="/api")
     # app.register_blueprint(stream_bp) # Removed for Single ESP32 Camera Architecture
 
     @app.errorhandler(404)

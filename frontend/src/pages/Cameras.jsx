@@ -6,7 +6,7 @@ export default function Cameras() {
       <header className="cameras-header">
         <div className="header-icon">🛡️</div>
         <h1>Primary Surveillance Feed</h1>
-        <p>Live ESP32-CAM monitoring feed.</p>
+        <p>Live Laptop monitoring feed.</p>
       </header>
 
       <div className="single-camera-container">
@@ -21,8 +21,8 @@ export default function Cameras() {
           
           <div className="camera-stream-container">
             <img
-              src="http://192.168.45.163/stream"
-              alt="ESP32 Surveillance Camera"
+              src="http://localhost:81/stream"
+              alt="Laptop Surveillance Camera"
               className="live-video"
               width="100%"
             />
@@ -35,7 +35,7 @@ export default function Cameras() {
             </div>
             <div className="stat">
               <span className="label">Type</span>
-              <span className="value">ESP32_CAM</span>
+              <span className="value">LAPTOP_VE</span>
             </div>
           </div>
         </div>

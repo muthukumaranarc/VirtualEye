@@ -12,6 +12,11 @@ CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 if __name__ == "__main__":
     print("[VirtualEye] Starting Backend...")
 
+    # Start laptop camera simulator if enabled
+    import os
+    if os.environ.get("VIRTUALEYE_CAMERA_SIMULATOR", "false").lower() == "true":
+        from app.services.camera_simulator import start_simulator_thread
+        start_simulator_thread()
 
     # CRITICAL: disable reloader to prevent restart loop
     app.run(

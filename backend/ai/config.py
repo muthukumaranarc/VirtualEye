@@ -1,0 +1,5 @@
+class Config:
+    MODEL_PATH = "models/yolov8n.pt"
+    HUMAN_CLASS_ID = 0
+    CONFIDENCE_THRESHOLD = 0.70
+    MOTION_CONTOUR_THRESHOLD = 1500
